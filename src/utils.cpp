@@ -241,7 +241,9 @@ RendererIterator::view_params(cv::Vec3d &T, cv::Vec3d &up) const
   // from http://www.xsi-blog.com/archives/115
   // compute the Point(x, y ,z) on the sphere based on index_ and radius_ using Golden Spiral technique
   static float inc = CV_PI * (3 - sqrt(5));
-  static float off = 2.0f / float(n_points_);
+  static float off = 2.0f / float(n_points_); // static float off = 2.0f / float(n_points_);
+//  size_t index2 = index_ + 
+
   float y = index_ * off - 1.0f + (off / 2.0f);
   float r = sqrt(1.0f - y * y);
   float phi = index_ * inc;

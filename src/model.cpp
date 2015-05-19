@@ -185,7 +185,7 @@ Model::get_bounding_box(aiVector3D* min, aiVector3D* max) const
 }
 
 void
-Model::recursive_render(const struct aiScene *sc, const aiNode* nd) const
+Model::recursive_render(const struct aiScene *sc, const aiNode* nd, const int j) const
 {
   int i;
   unsigned int n = 0, t;
@@ -199,6 +199,7 @@ Model::recursive_render(const struct aiScene *sc, const aiNode* nd) const
   // draw all meshes assigned to this node
   for (; n < nd->mNumMeshes; ++n)
   {
+    glEnable(GL_TEXTURE_2D);    
     const struct aiMesh* mesh = sc->mMeshes[nd->mMeshes[n]];
 
     if (n < texturesAndPaths.size())
@@ -257,7 +258,7 @@ Model::recursive_render(const struct aiScene *sc, const aiNode* nd) const
 
   // draw all children
   for (n = 0; n < nd->mNumChildren; ++n)
-    recursive_render(sc, nd->mChildren[n]);
+    recursive_render(sc, nd->mChildren[n], n);
 
   glPopMatrix();
 }
@@ -265,7 +266,7 @@ Model::recursive_render(const struct aiScene *sc, const aiNode* nd) const
 void
 Model::Draw() const
 {
-  recursive_render(scene, scene->mRootNode);
+  recursive_render(scene, scene->mRootNode, 0);
 }
 
 void
